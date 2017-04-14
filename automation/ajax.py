@@ -24,4 +24,13 @@ def isday(request):
     return JsonResponse(sch.IsDay, safe=False)
 
 def set_execution_element(request, id, value):
-    return JsonResponse({'Id': id, 'Value' : value}, safe=False)
+    Id = int(id)
+    Value = int(value)
+    sch.Context[Id].Overriden = True
+    sch.Context[Id].OverridenValue = Value
+    return JsonResponse(get_data(), safe=False)
+
+def set_execution_element_auto(request, id):
+    Id = int(id)
+    sch.Context[Id].Overriden = False
+    return JsonResponse(get_data(), safe=False)

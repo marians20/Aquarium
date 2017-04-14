@@ -93,18 +93,21 @@
                    var startButton=$("<button>")
                        .addClass("btn")
                        .addClass("btn-success")
+                       .click({'id': value.Id}, myApp.Start)
                        .append("<span class='glyphicon glyphicon-play' hidearea='true'/>");
                     buttonsGroup.append(startButton);
 
                     var stopButton=$("<button>")
                         .addClass("btn")
                         .addClass("btn-danger")
+                        .click({'id': value.Id}, myApp.Stop)
                         .append("<span class='glyphicon glyphicon-stop' hidearea='true'/>");
                     buttonsGroup.append(stopButton);
 
                     var automaticButton=$("<button>")
                        .addClass("btn")
                        .addClass("btn-warning")
+                       .click({'id': value.Id}, myApp.Automatic)
                        .append("<span class='glyphicon glyphicon-play-circle' hidearea='true'/>");
                     buttonsGroup.append(automaticButton);
                 }
@@ -112,14 +115,29 @@
 
             return {
                 GetData: function(){
-                    var url = urlBase + "/automation/status/"
+                    var url = urlBase + "/automation/status/";
+                    $.get(url, ShowStatus);
+                },
+
+                Start: function(caller){
+                    var url = urlBase + "/automation/set/" + caller.data.id +"/1";
+                    $.get(url, ShowStatus);
+                },
+
+                Stop: function(caller) {
+                    var url = urlBase + "/automation/set/" + caller.data.id +"/0";
+                    $.get(url, ShowStatus);
+                },
+
+                Automatic: function(caller) {
+                    var url = urlBase + "/automation/setauto/" + caller.data.id;
                     $.get(url, ShowStatus);
                 }
             };
         }());
 
         myApp.GetData();
-        setInterval(myApp.GetData, 10000);
+        setInterval(myApp.GetData, 5000);
     });
 </script>
 {% endblock %}
