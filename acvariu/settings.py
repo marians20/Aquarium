@@ -25,12 +25,13 @@ SECRET_KEY = '32e#j3mc3)tc6yf^3%mbyii8u=ag-wjkah=s=8pc-*_y@=g^5o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.200", "acvariu"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'ws4redis',
     'automation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,3 +125,24 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
 ]
+
+# WEBSOCKET_URL = '/ws/'
+
+# WS4REDIS_CONNECTION = {
+#     'host': 'localhost',
+#     'port': 16379,
+#     'db': 17,
+#     'password': 'vqhWquF!cJ4s*Ltw%rcM!?M3pGJgHDJC-BHAx?2*AexWPyPH3fCD4N&eq$AHQ9&^%jdYNDMX#YYb6@YW#4w&9hqNa_qzFxQ@f^3kwbj5$u=jHzyVavbT*dmqLnWs4?um',
+# }
+
+# WS4REDIS_CONNECTION = {
+#     'unix_socket_path': '/tmp/redis.sock',
+#     'db': 5
+# }
+
+# WS4REDIS_EXPIRE = 7200
+# WS4REDIS_PREFIX = 'ws'
+# WS4REDIS_SUBSCRIBER = 'myapp.redis_store.RedisSubscriber'
+# WSGI_APPLICATION = 'ws4redis.django_runserver.application'
+# SESSION_ENGINE = 'redis_sessions.session'
+# SESSION_REDIS_PREFIX = 'session'

@@ -10,5 +10,3 @@ from .ajax import *
 
 def index(request):
     return render(request, 'index1.html', get_data())
-
-

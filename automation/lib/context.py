@@ -13,9 +13,12 @@ class Context:
             ExecutionElement("WarmLight")
         ]
         id=1
+        gpio = 23
         for item in self.execution_elements:
             item.Id = id
+            item.Gpio = gpio
             id = id + 1
+            gpio = gpio + 1
         self.sensors = []
 
     def __getitem_by_name__(self, name):
@@ -30,7 +33,6 @@ class Context:
         for item in self.execution_elements:
             if item.Id == key:
                 return item
-        return "Pula"
 
     @property
     def ExecutionElements(self):

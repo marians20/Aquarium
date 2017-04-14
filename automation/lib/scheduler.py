@@ -46,8 +46,8 @@ class Scheduler(threading.Thread):
         self.IsRunning = True
         while not self.stop_required:
             self.IsDay = Sun.IsDay()
-            self.context["ColdLight"].AutomaticValue = self.IsDay
-            self.context["WarmLight"].AutomaticValue = self.IsDay
+            self.context[1].AutomaticValue = self.IsDay
+            self.context[2].AutomaticValue = self.IsDay
             time.sleep(1)
         self.stop_required = False
         self.IsRunning = False

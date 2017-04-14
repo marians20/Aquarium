@@ -23,6 +23,7 @@
         myApp = (function(){
             var urlBase = window.location.origin;
             function ShowStatus(data){
+                console.log(data);
                 var summaryContainer = $('#summaryContainer');
                 var executionElementsContainer = $('#executionElementsContainer');
 
@@ -92,6 +93,7 @@
 
                    var startButton=$("<button>")
                        .addClass("btn")
+                       .addClass("btn-lg")
                        .addClass("btn-success")
                        .click({'id': value.Id}, myApp.Start)
                        .append("<span class='glyphicon glyphicon-play' hidearea='true'/>");
@@ -99,6 +101,7 @@
 
                     var stopButton=$("<button>")
                         .addClass("btn")
+                        .addClass("btn-lg")
                         .addClass("btn-danger")
                         .click({'id': value.Id}, myApp.Stop)
                         .append("<span class='glyphicon glyphicon-stop' hidearea='true'/>");
@@ -106,6 +109,7 @@
 
                     var automaticButton=$("<button>")
                        .addClass("btn")
+                       .addClass("btn-lg")
                        .addClass("btn-warning")
                        .click({'id': value.Id}, myApp.Automatic)
                        .append("<span class='glyphicon glyphicon-play-circle' hidearea='true'/>");
