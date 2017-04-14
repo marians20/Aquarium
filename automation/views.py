@@ -19,11 +19,11 @@ def isday(request):
 def get_data():
     return {
         'ExecutionElements': json.loads(str(sch.context)),
-        'Now': Sun.Now().strftime('%H:%m:%S'),
+        'Now': Sun.Now().strftime('%H:%M:%S'),
         'IsDay': sch.IsDay,
-        'Dawn': Sun.Dawn().strftime('%H:%m:%S'),
-        'Sunrise': Sun.Sunrise().strftime('%H:%m:%S'),
-        'Noon': Sun.Noon().strftime('%H:%m:%S'),
-        'Sunset': Sun.Sunset().strftime('%H:%m:%S'),
-        'Dusk' : Sun.Dusk().strftime('%H:%m:%S')
+        'Dawn': Sun.Dawn().strftime('%H:%M:%S'),
+        'Sunrise': Sun.Sunrise().strftime('%H:%M:%S'),
+        'Noon': Sun.Noon().strftime('%H:%M:%S'),
+        'Sunset': Sun.Sunset().strftime('%H:%M:%S'),
+        'Dusk' : Sun.Dusk().strftime('%H:%M:%S')
         }
