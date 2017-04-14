@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block style %}
+<style>
+.form.form-group.div label {
+    width: 100%;
+    text-aligh: right;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="form">
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Now:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Now }}
+        </div>
+    </div>    
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Is day:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ IsDay }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Warm light:</label>
+        </div>
+        <div class=@col-md-9@>
+            {% if WarmLight %}
+                <img src="{% static 'images/bulb-on.png'%}" alt="On" class="icon">
+            {% else %}
+                <img src="{% static 'images/bulb-off.png'%}" alt="On" class="icon">
+            {% endif %}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Cold light:</label>
+        </div>
+        <div class=@col-md-9@>
+            {% if ColdLight %}
+                <img src="{% static 'images/bulb-on.png'%}" alt="On" clas="icon">
+            {% else %}
+                <img src="{% static 'images/bulb-off.png'%}" alt="On" class="icon">
+            {% endif %}
+        </div>
+    </div>    
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Dawn:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Dawn }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Sunrise:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Sunrise }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Noon:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Noon }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Sunset:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Sunset }}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Dusk:</label>
+        </div>
+        <div class=@col-md-9@>
+            {{ Dusk }}
+        </div>
+    </div>
+</div>
+{% endblock %}

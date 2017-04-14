@@ -1,0 +1,29 @@
+body{
+    background-color: #FAFAFA;
+    height: 100%;
+    width: 100%;
+}
+
+.icon {
+    height: 25px;
+    width: 25px;
+}
+
+.summary > div {
+    display: block;
+    height: 75px;
+    text-align: center;
+}
+
+.summary-container {
+    background-color: #a0d0ff;
+}
+
+.executionelementcontainer {
+    background-color: #819FF7;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #606060;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15 px #606060;
+}

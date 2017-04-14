@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block style %}
+<style>
+.form.form-group.div label {
+    width: 100%;
+    text-aligh: right;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="summary-container">
+<div class="row summary">
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Current Time</div>
+        <div> {{ Now }} </div>
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Is day:</div>
+        <div> {{ IsDay }} </div>
+        {% if IsDay %}
+            <img src="{% static 'images/day.png' %}" alt="Day" class="icon">
+        {% else %}
+            <img src="{% static 'images/night.png' %}" alt="Night" class="icon">
+        {% endif %}
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Dawn:</div>
+        <div> {{ Dawn }} </div>
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Sunrise:</div>
+        <div> {{ Sunrise }} </div>
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Noon:</div>
+        <div> {{ Noon }} </div>
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Sunset:</div>
+        <div> {{ Sunset }} </div>
+    </div>
+
+    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
+        <div>Dusk:</div>
+        <div> {{ Dusk }} </div>
+    </div>                        
+</div>
+</div>
+<div id="executionElementsContainer" class="row">
+    <h2>Execution elements</h2>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    var myApp;
+    $(document).ready(function(){
+        myApp = (function(){
+            var urlBase = window.location.origin;
+            function ShowStatus(data){
+                var container = $('#executionElementsContainer');
+                container.empty();
+                data.ExecutionElements.forEach(ShowExecutionElement)
+                console.log(data);
+
+                function ShowExecutionElement(value, index) {
+                    console.log("Index: " + index +", Value: " + value.Name);
+                    var row = $("<div>")
+                        .addClass("row")
+                        .addClass("executionelementcontainer");
+                    container.append(row);
+
+                    var nameColumn = $("<div>")
+                        .addClass("col-lg-4");
+                    row.append(nameColumn);
+
+                    var statusColumn = $("<div>")
+                        .addClass("col-lg-4");
+                    row.append(statusColumn);
+
+                    var actionsColumn = $("<div>")
+                        .addClass("col-lg-4");
+                    row.append(actionsColumn);                    
+
+                    nameColumn.text(value.Name);
+
+                    var imgPath = value.EffectiveValue
+                        ? "{% static 'images/bulb-on.png'%}"
+                        : "{% static 'images/bulb-off.png'%}";
+                    var statusImage = $("<img>")
+                        .addClass("icon")
+                        .attr("src", imgPath)
+                        .attr("alt", "ON");
+                   statusColumn.append(statusImage);
+
+                   var buttonsGroup=$("<div>")
+                        .addClass("btn-group");
+                   actionsColumn.append(buttonsGroup);
+
+                   var startButton=$("<button>")
+                       .addClass("btn")
+                       .addClass("btn-success")
+                       .append("<span class='glyphicon glyphicon-play' hidearea='true'/>");
+                    buttonsGroup.append(startButton);
+
+                    var stopButton=$("<button>")
+                        .addClass("btn")
+                        .addClass("btn-danger")
+                        .append("<span class='glyphicon glyphicon-stop' hidearea='true'/>");
+                    buttonsGroup.append(stopButton);
+
+                    var automaticButton=$("<button>")
+                       .addClass("btn")
+                       .addClass("btn-warning")
+                       .append("<span class='glyphicon glyphicon-play-circle' hidearea='true'/>");
+                    buttonsGroup.append(automaticButton);
+                }                
+            }
+
+            return {
+                GetData: function(){
+                    var url = urlBase + "/automation/status/"
+                    $.get(url, ShowStatus)
+                }
+            };
+        }());
+
+        myApp.GetData();
+    });
+</script>
+{% endblock %}
