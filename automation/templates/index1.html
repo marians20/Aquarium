@@ -9,50 +9,10 @@
 </style>
 {% endblock %}
 {% block content %}
-<div class="summary-container">
-<div class="row summary">
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Current Time</div>
-        <div> {{ Now }} </div>
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Is day:</div>
-        <div> {{ IsDay }} </div>
-        {% if IsDay %}
-            <img src="{% static 'images/day.png' %}" alt="Day" class="icon">
-        {% else %}
-            <img src="{% static 'images/night.png' %}" alt="Night" class="icon">
-        {% endif %}
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Dawn:</div>
-        <div> {{ Dawn }} </div>
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Sunrise:</div>
-        <div> {{ Sunrise }} </div>
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Noon:</div>
-        <div> {{ Noon }} </div>
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Sunset:</div>
-        <div> {{ Sunset }} </div>
-    </div>
-
-    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4">
-        <div>Dusk:</div>
-        <div> {{ Dusk }} </div>
-    </div>                        
+<div id="summaryContainer" class="row">
+    <h2>Summary</h2>
 </div>
-</div>
-<div id="executionElementsContainer" class="row">
+<div id="executionElementsContainer">
     <h2>Execution elements</h2>
 </div>
 {% endblock %}
@@ -63,28 +23,58 @@
         myApp = (function(){
             var urlBase = window.location.origin;
             function ShowStatus(data){
-                var container = $('#executionElementsContainer');
-                container.empty();
+                var summaryContainer = $('#summaryContainer');
+                var executionElementsContainer = $('#executionElementsContainer');
+
+                summaryContainer.empty();
+                ShowSummary();
+
+                executionElementsContainer.empty();
                 data.ExecutionElements.forEach(ShowExecutionElement)
                 console.log(data);
+
+                function ShowSummary(){
+                    var dayNight = $("<div>")
+                        .addClass("col-xs-1");
+                    var currentTime = $("<div>")
+                        .addClass("col-xs-5")
+                        .addClass("digital");
+                    var remainingTime = $("<div>")
+                        .addClass("col-xs-6");
+                    
+                    var dayNightImg = data.IsDay
+                        ? "{% static 'images/day.png' %}"
+                        : "{% static 'images/night.png' %}";
+                    var dayNightSymbol = $("<img>")
+                        .attr("src", dayNightImg)
+                        .attr("Alt", data.IsDay ? "Day" : "Night")
+                        .addClass("icon");
+                    dayNight.append(dayNightSymbol);
+
+                    currentTime.append(data.Now.substring(0, 5));
+
+                    summaryContainer.append(dayNight);
+                    summaryContainer.append(currentTime);
+                    summaryContainer.append(remainingTime);                    
+                }
 
                 function ShowExecutionElement(value, index) {
                     console.log("Index: " + index +", Value: " + value.Name);
                     var row = $("<div>")
                         .addClass("row")
                         .addClass("executionelementcontainer");
-                    container.append(row);
+                    executionElementsContainer.append(row);
 
                     var nameColumn = $("<div>")
-                        .addClass("col-lg-4");
+                        .addClass("col-xs-3");
                     row.append(nameColumn);
 
                     var statusColumn = $("<div>")
-                        .addClass("col-lg-4");
+                        .addClass("col-xs-1");
                     row.append(statusColumn);
 
                     var actionsColumn = $("<div>")
-                        .addClass("col-lg-4");
+                        .addClass("col-xs-7");
                     row.append(actionsColumn);                    
 
                     nameColumn.text(value.Name);
@@ -119,18 +109,19 @@
                        .addClass("btn-warning")
                        .append("<span class='glyphicon glyphicon-play-circle' hidearea='true'/>");
                     buttonsGroup.append(automaticButton);
-                }                
+                }
             }
 
             return {
                 GetData: function(){
                     var url = urlBase + "/automation/status/"
-                    $.get(url, ShowStatus)
+                    $.get(url, ShowStatus);
                 }
             };
         }());
 
         myApp.GetData();
+        setInterval(myApp.GetData, 10000);
     });
 </script>
 {% endblock %}

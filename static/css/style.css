@@ -1,7 +1,22 @@
+@font-face {
+    font-family: 'OpenSans';
+    src:url('../fonts/opensans-regular.ttf');
+}
+
+@font-face {
+    font-family: 'Digital';
+    src:url('../fonts/digital-7 (italic).ttf');
+}
+
 body{
     background-color: #FAFAFA;
     height: 100%;
     width: 100%;
+    font-family: OpenSans;
+}
+
+.page-header {
+    text-align: center;
 }
 
 .icon {
@@ -19,11 +34,17 @@ body{
     background-color: #a0d0ff;
 }
 
-.executionelementcontainer {
+.executionelementcontainer, #summaryContainer {
     background-color: #819FF7;
     padding: 10px;
     margin: 10px;
     border: 2px solid #606060;
     border-radius: 5px;
     box-shadow: 5px 5px 15 px #606060;
+}
+
+.digital {
+    font-family: Digital;
+    font-size: 2em;
+    font-weight: bold;
 }
