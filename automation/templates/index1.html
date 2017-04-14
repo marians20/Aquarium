@@ -31,8 +31,7 @@
 
                 executionElementsContainer.empty();
                 data.ExecutionElements.forEach(ShowExecutionElement)
-                console.log(data);
-
+                
                 function ShowSummary(){
                     var dayNight = $("<div>")
                         .addClass("col-xs-1");
@@ -59,7 +58,6 @@
                 }
 
                 function ShowExecutionElement(value, index) {
-                    console.log("Index: " + index +", Value: " + value.Name);
                     var row = $("<div>")
                         .addClass("row")
                         .addClass("executionelementcontainer");
