@@ -25,12 +25,28 @@ def isday(request):
 
 def set_execution_element(request, id, value):
     Id = int(id)
-    Value = int(value)
-    sch.Context[Id].Overriden = True
-    sch.Context[Id].OverridenValue = Value
+    if Id == 0:
+        set_all_execution_elements(request, value)
+    else:
+        Value = int(value)
+        sch.Context[Id].Overriden = True
+        sch.Context[Id].OverridenValue = Value
     return JsonResponse(get_data(), safe=False)
 
 def set_execution_element_auto(request, id):
     Id = int(id)
-    sch.Context[Id].Overriden = False
+    if Id == 0:
+        set_all_execution_elements_auto(request)
+    else:
+        sch.Context[Id].Overriden = False
     return JsonResponse(get_data(), safe=False)
+
+def set_all_execution_elements(request, value):
+    Value = int(value)
+    for executionElement in sch.Context.ExecutionElements:
+        executionElement.Overriden = True
+        executionElement.OverridenValue = Value
+
+def set_all_execution_elements_auto(request):
+    for executionElement in sch.Context.ExecutionElements:
+        executionElement.Overriden = False

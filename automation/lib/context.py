@@ -9,16 +9,20 @@ class Context:
 
     def __init__(self):
         self.execution_elements = [
-            ExecutionElement("ColdLight"),
-            ExecutionElement("WarmLight")
+            ExecutionElement("All"),
+            ExecutionElement("Night Lights"),
+            ExecutionElement("Day Lights"),
+            ExecutionElement("Heat")
         ]
         id=1
         gpio = 23
         for item in self.execution_elements:
-            item.Id = id
-            item.Gpio = gpio
-            id = id + 1
-            gpio = gpio + 1
+            if item.Name != "All":
+                item.Id = id
+                item.Gpio = gpio
+                id = id + 1
+                gpio = gpio + 1
+
         self.sensors = []
 
     def __getitem_by_name__(self, name):

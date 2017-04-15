@@ -47,7 +47,7 @@ class Scheduler(threading.Thread):
         while not self.stop_required:
             self.IsDay = Sun.IsDay()
             self.context[1].AutomaticValue = self.IsDay
-            self.context[2].AutomaticValue = self.IsDay
+            self.context[2].AutomaticValue = not self.IsDay
             time.sleep(1)
         self.stop_required = False
         self.IsRunning = False
