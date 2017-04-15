@@ -10,8 +10,8 @@ class Context:
     def __init__(self):
         self.execution_elements = [
             ExecutionElement("All"),
-            ExecutionElement("Night Lights"),
-            ExecutionElement("Day Lights"),
+            ExecutionElement("Warm Lights"),
+            ExecutionElement("Cold Light"),
             ExecutionElement("Heat")
         ]
         id=1
