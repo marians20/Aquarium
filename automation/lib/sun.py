@@ -24,28 +24,28 @@ class Sun(object):
     @staticmethod
     def Sunset(city_name:str = 'Bucharest', date = datetime.datetime.now(tz)):
         sun = Sun.Get(city_name, date)
-        return sun['sunset']
+        return sun['sunset'].time()
 
     @staticmethod
     def Sunrise(city_name:str = 'Bucharest', date = datetime.datetime.now(tz)):
         sun = Sun.Get(city_name, date)
-        return sun['sunrise']
+        return sun['sunrise'].time()
 
     @staticmethod
     def Dusk(city_name:str = 'Bucharest', date = datetime.datetime.now(tz)):
         sun = Sun.Get(city_name, date)
-        return sun['dusk']
+        return sun['dusk'].time()
 
     @staticmethod
     def Dawn(city_name:str = 'Bucharest', date = datetime.datetime.now(tz)):
         sun = Sun.Get(city_name, date)
-        return sun['dawn']
+        return sun['dawn'].time()
 
     @staticmethod
     def Noon(city_name:str = 'Bucharest', date = datetime.datetime.now(tz)):
         sun = Sun.Get(city_name, date)
-        return sun['noon']
+        return sun['noon'].time()
 
     @staticmethod
     def Now():
-        return datetime.datetime.now(Sun.tz)
+        return datetime.datetime.now(Sun.tz).time()

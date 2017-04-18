@@ -12,9 +12,9 @@ class TimeInterval:
     """Abstractisation for a time interval"""
 
     def __init__(self, from_time, to_time):
-        self.__FromTime = datetime.strptime(from_time, "%H:%M:%S").replace(tzinfo=Sun.tz)
-        self.__ToTime = datetime.strptime(to_time, "%H:%M:%S").replace(tzinfo=Sun.tz)
-    
+        self.__FromTime = datetime.strptime(from_time, "%H:%M:%S").replace(tzinfo=Sun.tz).time()
+        self.__ToTime = datetime.strptime(to_time, "%H:%M:%S").replace(tzinfo=Sun.tz).time()
+
     @property
     def FromTime(self):
         return self.__FromTime
@@ -37,10 +37,7 @@ class TimeInterval:
 class DailySchedule:
     def __init__(self, executionElement_id):
         self.__ExecutionElementId = executionElement_id
-        self.__Intervals = [
-            TimeInterval("07:00:00", "09:00:00"),
-            TimeInterval("17:00:00", "22:00:00")
-        ]
+        self.__Intervals = []
 
     @property
     def ExecutionElementId(self):
@@ -50,14 +47,20 @@ class DailySchedule:
     def Intervals(self):
         return self.__Intervals
 
+    def AddInterval(self, fromTime, toTime):
+        self.Intervals.append(TimeInterval(fromTime, toTime))
+
+
     def On(self):
-        now = datetime.strptime(Sun.Now().strftime("%H:%M:%S"), "%H:%M:%S").replace(tzinfo=Sun.tz)
+        now = Sun.Now()
         for interval in self.Intervals:
+            if interval.Belongs(now):
                 return True
         return False
-        
+
 class Scheduler(threading.Thread):
     """Scheduler"""
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.stop_required = False
@@ -66,10 +69,26 @@ class Scheduler(threading.Thread):
         self.IsRunning = False
         self.Schedules = []
         for executionElement in self.context.ExecutionElements:
-            if executionElement.Id != 0:
+            if executionElement.Id == 1:
                 sch = DailySchedule(executionElement.Id)
-                self.Schedules.append(sch)
+                #Morning
+                sch.AddInterval("07:00:00", "07:15:00")
+                sch.AddInterval("07:30:00", "08:30:00")
+                sch.AddInterval("08:45:00", "09:00:00")
 
+                #Evening
+                sch.AddInterval("17:00:00", "17:30:00")
+                sch.AddInterval("18:00:00", "21:00:00")
+                sch.AddInterval("21:30:00", "22:00:00")                
+                self.Schedules.append(sch)
+            elif executionElement.Id == 2:
+                #Morning
+                sch = DailySchedule(executionElement.Id)
+                sch.AddInterval("07:15:00", "08:45:00")
+                #Evening
+                sch.AddInterval("17:30:00", "21:30:00")
+                self.Schedules.append(sch)                
+                
     def run(self):
         self.do_job()
 
@@ -106,15 +125,12 @@ class Scheduler(threading.Thread):
         self.stop_required = False
         self.IsRunning = False
 
-    def set_automatic_values(self):       
+    def set_automatic_values(self):
         for scheduler in self.Schedules:
             if scheduler.On():
                 self.Context[scheduler.ExecutionElementId].AutomaticValue = 1
             else:
                 self.Context[scheduler.ExecutionElementId].AutomaticValue = 0
-
-            print("Execution Element Id " + str(scheduler.ExecutionElementId) + " status is " + str(self.Context[scheduler.ExecutionElementId].AutomaticValue))
-                
 
 global sch
 sch = Scheduler()
