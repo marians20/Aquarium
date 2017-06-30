@@ -1,0 +1,30 @@
+<h1>Aquarium</h1>
+
+<p *ngIf="!executionElements"><em>Loading...</em></p>
+<table class='table table-striped' *ngIf="executionElements">
+    <thead>
+        <tr>
+            <!--<th>Name</th>
+            <th>Status</th>
+            <th>Actions</th>-->
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let executionElement of executionElements">
+            <td>{{ executionElement.Name }}</td>
+            <!-- <td>{{ executionElement.EffectiveValue }}</td> -->
+            <td>
+              <div *ngIf="executionElement.EffectiveValue==0; then off else on"></div>
+              <ng-template #on><img [src]="'/assets/images/bulb-on.png'" alt="ON" class="icon" /></ng-template>
+              <ng-template #off><img [src]="'/assets/images/bulb-off.png'" alt="OFF" class="icon" /></ng-template>
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-danger" (click)="onStop(executionElement.Id)"><i class="fa fa-stop" aria-hidden="true"></i></button>
+                    <button class="btn btn-warning" (click)="onStart(executionElement.Id)"><i class="fa fa-play" aria-hidden="true"></i></button>
+                    <button class="btn btn-success" (click)="onAutomatic(executionElement.Id)"><i class="fa fa-play-circle" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
